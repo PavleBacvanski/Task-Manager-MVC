@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DomaciZadatakMVC.Models.Task>
+
+
+@{
+    ViewBag.Title = "GetTasks";
+}
+
+<h2>List of tasts</h2>
+
+<p class="text-success">@TempData["msg"]</p>
+<p class="text-success">@TempData["editMsg"]</p>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+{
+    <p>
+        @Html.ActionLink("Create New Task", "Create", "Tasks")
+    </p>
+}
+<table class="table table-bordered">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Progress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assignee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+       
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Progress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assignee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+          
+
+            @if (User.IsInRole("Developer"))
+            {
+                <td>
+                    @if (item.Assignee != null)
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Tasks", new { id = item.TaskId }, null)
+                    }
+                </td>
+            }
+
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Tasks", new { id = item.TaskId }, null)  |
+                    @Html.ActionLink("Delete", "Delete", "Tasks", new { id = item.TaskId }, null)
+                </td>
+            }
+            @if(User.IsInRole("Project Manager"))
+            {
+                <td>
+                     @Html.ActionLink("Edit", "Edit", "Tasks", new { id = item.TaskId }, null)   
+                </td>
+            }
+        </tr>
+    }
+
+</table>

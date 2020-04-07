@@ -1,0 +1,94 @@
+﻿@*@model IEnumerable<DomaciZadatakMVC.Models.Project>*@
+@model  DomaciZadatakMVC.Models.AdminViewModel
+
+@{
+    ViewBag.Title = "GetProjets";
+}
+
+<h2>List of Projects</h2>
+
+<p class="text-success">@TempData["msg"]</p>
+<p class="text-success">@TempData["editMsg"]</p>
+
+<p>
+    @Html.ActionLink("Create New project", "Create", "Projects")
+</p>
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects.ProjectCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects.ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects.ProjectManager)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Pro)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectManager)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Projects", new { id = item.Id }, null) 
+                @if(User.IsInRole("Admin"))
+                {
+                 @Html.ActionLink("Delete", "Delete", "Projects", new { id = item.Id }, null)    
+                }
+            </td>
+        </tr>
+
+    }
+
+
+</table>
+
+
+@if (User.IsInRole("Project Manager"))
+{
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                @foreach (var item in Model.Pro)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks.Progress)
+                    </th>
+                }
+            </tr>
+        </thead>
+
+        <tr>
+            @foreach (var item in Model.Pro)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+            }
+        </tr>
+        <tr>
+            @foreach (var i in Model.Avge)
+            {
+                <td>
+                    @{ 
+                        string value = i.ToString("0.00");
+                    }
+                    @Html.DisplayFor(modelItem => value)
+                </td>
+            }
+        </tr>
+    </table>
+}

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DomaciZadatakMVC.Models.Task>
+
+@{
+    ViewBag.Title = "GetTasksAdmin";
+}
+
+<h2>List of Tasks</h2>
+
+<p class="text-success">@TempData["msg"]</p>
+<p class="text-success">@TempData["editMsg"]</p>
+
+<p>
+    @Html.ActionLink("Create New Task", "Create", "Tasks")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Progress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assignee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Project.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Progress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assignee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Username)
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Tasks", new { id = item.TaskId }, null) |
+                @Html.ActionLink("Delete", "Delete", "Tasks", new { id = item.TaskId }, null)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<DomaciZadatakMVC.Models.User>
+
+@{
+    ViewBag.Title = "GetUsers";
+}
+
+<h2>List of users</h2>
+
+<p class="text-success">@TempData["msg"]</p>
+<p class="text-success">@TempData["editMsg"]</p>
+<p>
+    @Html.ActionLink("Create new user", "Create", "Users")
+</p>
+
+<table class="table table-bordered">
+    <thead class="">
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Role1.RoleName)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Role1.RoleName)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Users", new { id = item.Id }, null) |
+            @Html.ActionLink("Delete", "Delete", "Users", new { id = item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>
